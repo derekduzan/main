@@ -339,6 +339,11 @@ h1 {
             <input type="tel" id="phone" name="phone" required />
           </div>
 
+          <div class="form-row" style="display: none !important;" aria-hidden="true">
+            <label for="honeypot">Leave this field blank</label>
+            <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off" />
+          </div>
+
           <div class="form-row">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="3" required></textarea>
