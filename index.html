@@ -1,426 +1,544 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Derek Duzan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Derek Duzan</title>
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230f172a'/%3E%3Ctext x='50' y='65' text-anchor='middle' font-size='58' font-family='Arial, sans-serif' font-weight='700' fill='white'%3EDD%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230f172a'/%3E%3Ctext x='50' y='65' text-anchor='middle' font-size='58' font-family='Arial, sans-serif' font-weight='700' fill='white'%3EDD%3C/text%3E%3C/svg%3E" />
 
-<style>
-:root {
-  --text: #f8fafc;
-  --muted: rgba(248, 250, 252, .74);
-  --muted-soft: rgba(248, 250, 252, .62);
-  --card: rgba(15, 23, 42, .34);
-  --line: rgba(255, 255, 255, .18);
-  --button: rgba(255, 255, 255, .14);
-  --button-hover: rgba(255, 255, 255, .22);
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..0,800;1,300..0,800&display=swap" rel="stylesheet">
 
-* {
-  box-sizing: border-box;
-}
+  <style>
+    :root {
+      --text: #f8fafc;
+      --muted: rgba(248, 250, 252, .74);
+      --card-bg: #1e293b;
+      --line: rgba(255, 255, 255, .18);
+      
+      /* Vibrant Accent Design Tokens */
+      --accent-pink: #f472b6;
+      --accent-cyan: #22d3ee;
+      --btn-label-bg: #0f172a;
+      
+      --glow-cyan: rgba(34, 211, 238, 0.4);
+    }
 
-html,
-body {
-  margin: 0;
-  min-height: 100%;
-}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
 
-body {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: var(--text);
-  background:
-    linear-gradient(rgba(2, 6, 23, .42), rgba(2, 6, 23, .60)),
-    url('assets/background.jpg') center / cover no-repeat fixed;
-}
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: #05070c;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-.card {
-  width: min(100%, 324px);
-  padding: 24px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, .24);
-  border-radius: 26px;
-  background: var(--card);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-  box-shadow: 0 22px 64px rgba(0, 0, 0, .30);
-}
+    /* Animated Ambient Gradient Canvas */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -20%; left: -20%;
+      width: 140%; height: 140%;
+      background:
+        radial-gradient(circle at 15% 15%, #1e1b4b, transparent 45%),
+        radial-gradient(circle at 85% 85%, #0f172a, transparent 50%),
+        radial-gradient(circle at 50% 25%, #111827, transparent 40%);
+      opacity: 0.95;
+      z-index: -1;
+      will-change: transform;
+      pointer-events: none;
+    }
 
-.logo {
-  width: 104px;
-  height: 104px;
-  display: block;
-  margin: 0 auto 16px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, .5);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, .28);
-}
+    /* Premium SVG Noise Overlay Texture */
+    body::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 5;
+    }
 
-h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  line-height: 1.1;
-  letter-spacing: -.03em;
-  font-weight: 750;
-}
+    .card {
+      width: min(100%, 340px);
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: var(--card-bg);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+    }
 
-.handle {
-  margin: 7px 0 6px;
-  color: var(--muted);
-  font-size: .94rem;
-}
+    .card::before {
+      content: '';
+      position: absolute;
+      width: 140px; height: 140px;
+      top: -50px; right: -40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.01);
+      pointer-events: none;
+    }
 
-.subtitle {
-  margin: 0 0 18px;
-  color: var(--muted-soft);
-  font-size: .82rem;
-  letter-spacing: .04em;
-}
+    .card > * { position: relative; z-index: 1; }
 
-.btn {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  padding: 11px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--button);
-  color: var(--text);
-  text-decoration: none;
-  font-weight: 620;
-  font-family: inherit;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform .18s ease, background .18s ease, border-color .18s ease;
-}
+    .profile-photo {
+      width: 112px; height: 112px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 0 0 20px var(--glow-cyan);
+      margin: 0 auto 20px;
+      display: block;
+    }
 
-.btn:hover {
-  transform: translateY(-1px);
-  background: var(--button-hover);
-  border-color: rgba(255, 255, 255, .34);
-}
+    h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: -.03em;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
 
-.btn:focus-visible,
-.social-icon:focus-visible,
-.form-row input:focus-visible,
-.form-row textarea:focus-visible {
-  outline: 3px solid rgba(255, 255, 255, .55);
-  outline-offset: 3px;
-}
+    .handle {
+      margin: 6px 0 12px;
+      color: var(--muted);
+      font-size: .95rem;
+      font-weight: 500;
+    }
 
-/* Expandable contact button/form */
-.contact-box {
-  width: 100%;
-  margin-top: 10px;
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  background: var(--button);
-  overflow: hidden;
-  transition: background .18s ease, border-color .18s ease;
-}
+    .subtitle {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .06em;
+      line-height: 1.4;
+    }
 
-.contact-box:hover {
-  background: var(--button-hover);
-  border-color: rgba(255, 255, 255, .34);
-}
+    /* Refactored High-Performance Interactive Button System */
+    .btn {
+      display: flex;
+      width: 100%;
+      height: 50px;
+      margin-top: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: .85rem;
+      border-radius: 99px;
+      overflow: hidden;
+      border: 2px solid var(--accent-pink);
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      position: relative;
+      transform: translateZ(0);
+      will-change: transform;
+      transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+    }
 
-.contact-box.open {
-  border-radius: 24px;
-  background: var(--button-hover);
-}
+    .btn:hover {
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 8px 20px rgba(244, 114, 182, 0.25);
+    }
 
-.contact-toggle {
-  margin-top: 0;
-  border: 0;
-  background: transparent;
-  border-radius: 0;
-}
+    /* Left-aligned readable action labels */
+    .btn-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 24px;
+      color: #000000;
+      background: #ffffff;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
 
-.contact-toggle:hover {
-  transform: none;
-  background: transparent;
-  border-color: transparent;
-}
+    /* Accent tracking marquee right side panel */
+    .btn-marquee {
+      width: 110px;
+      background: var(--btn-label-bg);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      border-left: 1px solid var(--line);
+      z-index: 2;
+    }
 
-.contact-fields {
-  padding: 0 14px 14px;
-  text-align: left;
-  animation: expandIn .22s ease;
-}
+    .marquee-text {
+      color: var(--accent-pink);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      padding-right: 24px;
+      display: inline-block;
+      animation: marqueeRun 5s linear infinite;
+      will-change: transform;
+    }
 
-.contact-fields form {
-  padding-top: 2px;
-}
+    @keyframes marqueeRun {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
 
-.form-row {
-  margin-bottom: 10px;
-}
+    /* Universal Interactive Drawer Structural Framework */
+    .drawer-container {
+      width: 100%;
+      margin-top: 14px;
+      perspective: 1200px;
+    }
 
-.form-row label {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--muted);
-  font-size: .76rem;
-  font-weight: 650;
-  letter-spacing: .03em;
-}
+    .drawer-flipper {
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      position: relative;
+      width: 100%;
+    }
 
-.form-row input,
-.form-row textarea {
-  width: 100%;
-  padding: 10px 11px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, .08);
-  color: var(--text);
-  font: inherit;
-}
+    .drawer-container.flipped .drawer-flipper {
+      transform: rotateY(180deg);
+    }
 
-.form-row textarea {
-  resize: vertical;
-  min-height: 82px;
-}
+    .flip-front, .flip-back {
+      width: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
 
-.form-row input:focus,
-.form-row textarea:focus {
-  border-color: rgba(255, 255, 255, .48);
-  background: rgba(255, 255, 255, .11);
-  outline: none;
-}
+    .flip-front {
+      position: relative;
+      z-index: 2;
+    }
 
-.submit-btn {
-  margin-top: 4px;
-  background: rgba(255, 255, 255, .12);
-}
+    .flip-back {
+      transform: rotateY(180deg);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      padding: 36px 16px 20px;
+      text-align: left;
+      visibility: hidden;
+      z-index: 1;
+    }
 
-.social-row {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 16px;
-}
+    .drawer-container.flipped .flip-front {
+      position: absolute;
+      top: 0; left: 0;
+      visibility: hidden;
+    }
 
-.social-icon {
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--button);
-  color: var(--text);
-  text-decoration: none;
-  transition: transform .18s ease, background .18s ease;
-}
+    .drawer-container.flipped .flip-back {
+      position: relative;
+      visibility: visible;
+      z-index: 2;
+    }
 
-.social-icon:hover {
-  transform: translateY(-1px);
-  background: var(--button-hover);
-}
+    #bookingContainer .flip-back {
+      padding: 36px 0 0; 
+      overflow: hidden;
+    }
 
-.social-icon svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
+    .calendly-wrapper {
+      width: 100%;
+      height: 380px; 
+      background: #ffffff;
+      border-radius: 0 0 22px 22px;
+    }
 
-.footer {
-  margin: 17px 0 0;
-  color: var(--muted-soft);
-  font-size: .72rem;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
+    .close-drawer-btn {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: color 0.15s ease, background-color 0.15s ease;
+      z-index: 10;
+    }
 
-@keyframes expandIn {
-  from {
-    opacity: 0;
-    transform: translateY(-3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .close-drawer-btn:hover {
+      color: var(--text);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
-@media (max-width: 420px) {
-  body {
-    padding: 16px;
-    background-attachment: scroll;
-  }
-  .card {
-    padding: 22px;
-  }
-}
+    .close-drawer-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-@media (max-width: 480px) {
-  .card {
-    width: min(100%, 340px);
-    padding: 24px 20px;
-    border-radius: 24px;
-  }
-  .logo {
-    width: 96px;
-    height: 96px;
-    margin-bottom: 14px;
-  }
-  h1 {
-    font-size: 1.42rem;
-  }
-  .handle {
-    font-size: .9rem;
-  }
-  .subtitle {
-    font-size: .78rem;
-    margin-bottom: 16px;
-  }
-  .btn {
-    padding: 10px 13px;
-    font-size: .95rem;
-  }
-  .social-icon {
-    width: 38px;
-    height: 38px;
-  }
-}
+    /* Forms Elements Styling */
+    .form-row {
+      margin-bottom: 12px;
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--muted);
+        font-size: .68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+      }
+      input, textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.25);
+        color: var(--text);
+        font: inherit;
+        font-size: .9rem;
+        &:focus { outline: none; border-color: var(--accent-cyan); }
+      }
+      textarea { resize: vertical; min-height: 75px; }
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-    animation-duration: .01ms !important;
-  }
-}
-</style>
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 99px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .visually-hidden-honeypot {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+    }
+
+    /* Social Layout Row Element Objects */
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .social-icon {
+      width: 44px; height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent-cyan);
+      border-radius: 50%;
+      color: #fff;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 0 5px var(--glow-cyan);
+
+      &:hover {
+        transform: scale(1.1) translateY(-2px);
+        background: var(--accent-cyan);
+        color: #000;
+        box-shadow: 0 0 15px var(--glow-cyan);
+      }
+
+      svg { width: 20px; height: 20px; fill: currentColor; }
+    }
+
+    .footer {
+      margin: 28px 0 0;
+      color: var(--accent-pink);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 480px) {
+      .card { width: 100%; padding: 28px 20px; }
+    }
+  </style>
 </head>
 
 <body>
   <main class="card" aria-label="Derek Duzan profile links">
-    <img src="assets/profile.jpg" class="logo" alt="Derek Duzan profile photo" />
+    
+    <img src="assets/profile.jpg" class="profile-photo" alt="Derek Duzan profile photo" />
 
-    <h1>Derek Duzan</h1>
+    <h1>DEREK DUZAN</h1>
     <p class="handle">@derekduzan</p>
     <p class="subtitle">Futuristic · Strategic · Connectedness · Ideation · Activator</p>
 
-    <div class="contact-box">
-      <button class="btn contact-toggle" type="button" aria-expanded="false" aria-controls="contactFields">
-        Contact Me
-      </button>
-
-      <div id="contactFields" class="contact-fields" hidden>
-        <form action="https://script.google.com/macros/s/AKfycbwWP5xsMSsj2-BTMS-pzxnvsPkmjoWfFV3m4eAesRa1wW6CkYBn4kZMR1qqf1wCNGtpww/exec" method="POST">
-          <div class="form-row">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" required />
-          </div>
-
-          <div class="form-row">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" required />
-          </div>
-
-          <div class="form-row">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-
-          <div class="form-row">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required />
-          </div>
-
-          <div class="form-row" style="display: none !important;" aria-hidden="true">
-            <label for="honeypot">Leave this field blank</label>
-            <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <div class="form-row">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="3" required></textarea>
-          </div>
-
-          <button class="btn submit-btn" type="submit">Submit</button>
-        </form>
+    <div class="drawer-container" id="contactContainer">
+      <div class="drawer-flipper">
+        <div class="flip-front">
+          <button class="btn" type="button">
+            <span class="btn-label">CONTACT ME</span>
+            <span class="btn-marquee">
+              <span class="marquee-text">DEREKDUZAN.COM CONTACT</span>
+              <span class="marquee-text">DEREKDUZAN.COM CONTACT</span>
+            </span>
+          </button>
+        </div>
+        <div class="flip-back">
+          <button class="close-drawer-btn" id="closeContactBtn" type="button" aria-label="Close Contact Frame">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+          <form id="contactForm" action="https://script.google.com/macros/s/AKfycbwWP5xsMSsj2-BTMS-pzxnvsPkmjoWfFV3m4eAesRa1wW6CkYBn4kZMR1qqf1wCNGtpww/exec" method="POST">
+            <div class="form-row">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
+            </div>
+            <div class="form-row">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
+            </div>
+            <div class="form-row">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="form-row">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="3" required></textarea>
+            </div>
+            <div class="visually-hidden-honeypot" aria-hidden="true">
+              <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off" />
+            </div>
+            <button class="submit-btn" type="submit" id="submitBtn">Send Message</button>
+          </form>
+        </div>
       </div>
     </div>
 
-    <a class="btn" href="https://www.derekduzan.com/">Visit Website</a>
-    <a class="btn" href="https://calendly.com/derekduzan">Book a Call</a>
+    <a class="btn" href="https://www.derekduzan.com/">
+      <span class="btn-label">VISIT WEBSITE</span>
+      <span class="btn-marquee">
+        <span class="marquee-text">DEREKDUZAN.COM</span>
+        <span class="marquee-text">DEREKDUZAN.COM</span>
+      </span>
+    </a>
+
+    <div class="drawer-container" id="bookingContainer">
+      <div class="drawer-flipper">
+        <div class="flip-front">
+          <button class="btn" type="button">
+            <span class="btn-label">BOOK A CALL</span>
+            <span class="btn-marquee">
+              <span class="marquee-text">CALENDLY.COM ENGINE</span>
+              <span class="marquee-text">CALENDLY.COM ENGINE</span>
+            </span>
+          </button>
+        </div>
+        <div class="flip-back">
+          <button class="close-drawer-btn" id="closeBookingBtn" type="button" aria-label="Close Scheduler Frame">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+          <div class="calendly-wrapper">
+            <iframe src="https://calendly.com/derekduzan?embed_domain=derekduzan.com&embed_type=inline" width="100%" height="100%" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="social-row" aria-label="Social links">
       <a class="social-icon" href="https://www.linkedin.com/" aria-label="LinkedIn" title="LinkedIn">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6.9 8.6H3.8V20h3.1V8.6ZM5.4 3.8a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6ZM20.2 13.1c0-3.2-1.7-4.7-4-4.7a3.5 3.5 0 0 0-3.2 1.8V8.6h-3.1V20H13v-6c0-1.6.3-3.2 2.3-3.2s2 1.9 2 3.3V20h3.1v-6.9Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.9 8.6H3.8V20h3.1V8.6ZM5.4 3.8a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6ZM20.2 13.1c0-3.2-1.7-4.7-4-4.7a3.5 3.5 0 0 0-3.2 1.8V8.6h-3.1V20H13v-6c0-1.6.3-3.2 2.3-3.2s2 1.9 2 3.3V20h3.1v-6.9Z"/></svg>
       </a>
-
       <a class="social-icon" href="https://www.instagram.com/" aria-label="Instagram" title="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Zm5.25-3a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.25 6.5Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Zm5.25-3a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.25 6.5Z"/></svg>
       </a>
-
       <a class="social-icon" href="https://www.facebook.com/" aria-label="Facebook" title="Facebook">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M13.5 22v-8.2h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.6-1.6H17V4.1c-.4-.1-1.4-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.5H8v3.2h2.6V22h2.9Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.6-1.6H17V4.1c-.4-.1-1.4-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.5H8v3.2h2.6V22h2.9Z"/></svg>
       </a>
-
       <a class="social-icon" href="https://www.x.com/" aria-label="X" title="X">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M18.9 3H21l-4.6 5.2L22 21h-4.4l-3.5-4.8L9.8 21H7.7l5-5.7L2 3h4.5l3.1 4.3L13.4 3h5.5Zm-1.5 16h1.2L7.2 4.9H6l11.4 14.1Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 3H21l-4.6 5.2L22 21h-4.4l-3.5-4.8L9.8 21H7.7l5-5.7L2 3h4.5l3.1 4.3L13.4 3h5.5Zm-1.5 16h1.2L7.2 4.9H6l11.4 14.1Z"/></svg>
       </a>
     </div>
 
-    <p class="footer">www.derekduzan.com</p>
+    <p class="footer">DEREKDUZAN.COM</p>
   </main>
 
   <script>
-    const contactBox = document.querySelector('.contact-box');
-    const contactToggle = document.querySelector('.contact-toggle');
-    const contactFields = document.querySelector('#contactFields');
-    const firstNameInput = document.querySelector('#firstName');
-    const contactForm = contactFields.querySelector('form');
-    const submitBtn = contactFields.querySelector('.submit-btn');
+    // 1. Double Drawer Functional Operations Logic System
+    const contactContainer = document.getElementById('contactContainer');
+    const bookingContainer = document.getElementById('bookingContainer');
 
-    // Controls slide toggle drawer
-    contactToggle.addEventListener('click', () => {
-      const isOpen = contactToggle.getAttribute('aria-expanded') === 'true';
+    const openContactBtn = contactContainer.querySelector('.flip-front button');
+    const closeContactBtn = document.getElementById('closeContactBtn');
 
-      contactToggle.setAttribute('aria-expanded', String(!isOpen));
-      contactFields.hidden = isOpen;
-      contactBox.classList.toggle('open', !isOpen);
+    const openBookingBtn = bookingContainer.querySelector('.flip-front button');
+    const closeBookingBtn = document.getElementById('closeBookingBtn');
 
-      if (!isOpen) {
-        setTimeout(() => {
-          firstNameInput.focus();
-        }, 100);
+    // Drawer Opening/Closing Management Sequences
+    openContactBtn.addEventListener('click', () => {
+      bookingContainer.classList.remove('flipped'); 
+      contactContainer.classList.add('flipped');
+      setTimeout(() => document.getElementById('firstName').focus(), 300);
+    });
+
+    closeContactBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      contactContainer.classList.remove('flipped');
+    });
+
+    openBookingBtn.addEventListener('click', () => {
+      contactContainer.classList.remove('flipped'); 
+      bookingContainer.classList.add('flipped');
+    });
+
+    closeBookingBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bookingContainer.classList.remove('flipped');
+    });
+
+    // Close active element triggers cleanly on target context blur events
+    document.addEventListener('click', (e) => {
+      if (contactContainer.classList.contains('flipped') && !contactContainer.contains(e.target)) {
+        contactContainer.classList.remove('flipped');
+      }
+      if (bookingContainer.classList.contains('flipped') && !bookingContainer.contains(e.target)) {
+        bookingContainer.classList.remove('flipped');
       }
     });
 
-    // Submits data via clean background pipeline 
+    // 2. High-Performance Text-Safe Parallax Engine Pipeline via CSS Custom Variables
+    const bgElement = document.body;
+    document.addEventListener('mousemove', (e) => {
+      const xPercent = (e.clientX / window.innerWidth) - 0.5;
+      const yPercent = (e.clientY / window.innerHeight) - 0.5;
+      
+      bgElement.style.setProperty('--bg-x', `${xPercent * 30}px`);
+      bgElement.style.setProperty('--bg-y', `${yPercent * 30}px`);
+    });
+
+    // 3. Contact Form Submission Interface Pipe
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const flipBack = contactContainer.querySelector('.flip-back');
+
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault(); 
+      if (document.getElementById('honeypot').value !== '') return;
       
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
-      // 1. Package the basic fields automatically
       const formData = new FormData(contactForm);
-      
-      // 2. Explicitly force target the textarea element value to eliminate packaging loss
-      const messageBox = document.querySelector('#message');
+      const messageBox = document.getElementById('message');
       formData.set('message', messageBox.value);
 
       fetch(contactForm.action, {
@@ -429,11 +547,10 @@ h1 {
         mode: 'no-cors' 
       })
       .then(() => {
-        // Render stylized confirmation directly inside the drawer container
-        contactFields.innerHTML = "<h3 style='text-align:center; font-size:.95rem; margin:14px 0 4px; font-weight:600; color:var(--text);'>Thank you! Message received.</h3>";
+        flipBack.innerHTML = "<h3 style='text-align:center; font-size:.9rem; color:#fff; padding-top: 55px; font-weight:700;'>MESSAGE RECEIVED.</h3>";
         setTimeout(() => {
-          contactToggle.click(); // Autoclose card drawer container cleanly
-        }, 2200);
+          contactContainer.classList.remove('flipped');
+        }, 2000);
       })
       .catch(err => {
         console.error(err);
@@ -442,5 +559,12 @@ h1 {
       });
     });
   </script>
+  
+  <style>
+    /* Injects motion calculations cleanly down context paths using GPU matrix transformations */
+    body::before {
+      transform: translate3d(var(--bg-x, 0px), var(--bg-y, 0px), 0);
+    }
+  </style>
 </body>
 </html>
