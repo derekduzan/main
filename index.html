@@ -476,7 +476,7 @@
     <p class="footer">DEREKDUZAN.COM</p>
   </main>
 
-  <script>
+<script>
     // 1. Double Drawer Functional Operations Logic System
     const contactContainer = document.getElementById('contactContainer');
     const bookingContainer = document.getElementById('bookingContainer');
@@ -536,13 +536,22 @@
 
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault(); 
+      
+      // Anti-Spam Check 1: Honeypot
       if (document.getElementById('honeypot').value !== '') return;
+      
+      // Anti-Spam Check 2: Block Links & URLs in Message
+      const messageBox = document.getElementById('message');
+      const messageValue = messageBox.value.toLowerCase();
+      if (messageValue.includes('http') || messageValue.includes('www') || messageValue.includes('.app') || messageValue.includes('.vercel')) {
+        alert('Links and URLs are not allowed in the message field.');
+        return; // Stops the execution right here so fetch never triggers
+      }
       
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
       const formData = new FormData(contactForm);
-      const messageBox = document.getElementById('message');
       formData.set('message', messageBox.value);
 
       fetch(contactForm.action, {
