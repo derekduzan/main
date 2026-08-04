@@ -428,7 +428,7 @@
       </div>
     </div>
 
-    <a class="btn" href="https://www.derekduzan.com/">
+    <a class="btn" href="https://www.derekduzan.com/" data-analytics-label="Website">
       <span class="btn-label">VISIT WEBSITE</span>
       <span class="btn-marquee">
         <span class="marquee-text">GO TO DOT COM</span>
@@ -459,16 +459,16 @@
     </div>
 
     <div class="social-row" aria-label="Social links">
-      <a class="social-icon" href="https://www.linkedin.com/" aria-label="LinkedIn" title="LinkedIn">
+      <a class="social-icon" href="https://www.linkedin.com/" data-analytics-label="LinkedIn" aria-label="LinkedIn" title="LinkedIn">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.9 8.6H3.8V20h3.1V8.6ZM5.4 3.8a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6ZM20.2 13.1c0-3.2-1.7-4.7-4-4.7a3.5 3.5 0 0 0-3.2 1.8V8.6h-3.1V20H13v-6c0-1.6.3-3.2 2.3-3.2s2 1.9 2 3.3V20h3.1v-6.9Z"/></svg>
       </a>
-      <a class="social-icon" href="https://www.instagram.com/" aria-label="Instagram" title="Instagram">
+      <a class="social-icon" href="https://www.instagram.com/" data-analytics-label="Instagram" aria-label="Instagram" title="Instagram">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Zm5.25-3a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.25 6.5Z"/></svg>
       </a>
-      <a class="social-icon" href="https://www.facebook.com/" aria-label="Facebook" title="Facebook">
+      <a class="social-icon" href="https://www.facebook.com/" data-analytics-label="Facebook" aria-label="Facebook" title="Facebook">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.6-1.6H17V4.1c-.4-.1-1.4-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.5H8v3.2h2.6V22h2.9Z"/></svg>
       </a>
-      <a class="social-icon" href="https://www.x.com/" aria-label="X" title="X">
+      <a class="social-icon" href="https://www.x.com/" data-analytics-label="X" aria-label="X" title="X">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 3H21l-4.6 5.2L22 21h-4.4l-3.5-4.8L9.8 21H7.7l5-5.7L2 3h4.5l3.1 4.3L13.4 3h5.5Zm-1.5 16h1.2L7.2 4.9H6l11.4 14.1Z"/></svg>
       </a>
     </div>
@@ -476,6 +476,7 @@
     <p class="footer">DEREKDUZAN.COM</p>
   </main>
 
+<script src="analytics.js" defer></script>
 <script>
     // 1. Double Drawer Functional Operations Logic System
     const contactContainer = document.getElementById('contactContainer');
@@ -491,22 +492,26 @@
     openContactBtn.addEventListener('click', () => {
       bookingContainer.classList.remove('flipped'); 
       contactContainer.classList.add('flipped');
+      window.DDAnalytics?.track('contact_opened', 'Contact form');
       setTimeout(() => document.getElementById('firstName').focus(), 300);
     });
 
     closeContactBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       contactContainer.classList.remove('flipped');
+      window.DDAnalytics?.track('contact_closed', 'Contact form');
     });
 
     openBookingBtn.addEventListener('click', () => {
       contactContainer.classList.remove('flipped'); 
       bookingContainer.classList.add('flipped');
+      window.DDAnalytics?.track('booking_opened', 'Calendly');
     });
 
     closeBookingBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       bookingContainer.classList.remove('flipped');
+      window.DDAnalytics?.track('booking_closed', 'Calendly');
     });
 
     // Close active element triggers cleanly on target context blur events
@@ -538,18 +543,26 @@
       e.preventDefault(); 
       
       // Anti-Spam Check 1: Honeypot
-      if (document.getElementById('honeypot').value !== '') return;
+      if (document.getElementById('honeypot').value !== '') {
+        window.DDAnalytics?.track('honeypot_triggered', 'Contact form honeypot was filled', {}, true);
+        return;
+      }
       
       // Anti-Spam Check 2: Block Links & URLs in Message
       const messageBox = document.getElementById('message');
       const messageValue = messageBox.value.toLowerCase();
       if (messageValue.includes('http') || messageValue.includes('www') || messageValue.includes('.app') || messageValue.includes('.vercel')) {
+        window.DDAnalytics?.track('form_blocked_url', 'Contact message contained a URL', {}, true);
         alert('Links and URLs are not allowed in the message field.');
         return; // Stops the execution right here so fetch never triggers
       }
       
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
+
+      window.DDAnalytics?.track('form_submitted', 'Contact form', {
+        formElapsedSeconds: Math.round(performance.now() / 1000)
+      }, true);
 
       const formData = new FormData(contactForm);
       formData.set('message', messageBox.value);
